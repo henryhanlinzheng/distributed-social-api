@@ -26,9 +26,6 @@ class LastFM(WebAPI):
         data = self._download_url(url)
 
         self.top_tracks = data['tracks']['track'][0]['name']
-        
-        if response in locals() and response is not None:
-            response.close()
 
     def transclude(self, message:str) -> str:
         '''
