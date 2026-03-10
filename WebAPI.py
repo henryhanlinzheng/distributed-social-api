@@ -9,9 +9,15 @@
 # hhzheng1@uci.edu
 # 19204536
 
+import urllib.request
+import urllib.error
+import json
 from abc import ABC, abstractmethod
 
 class WebAPI(ABC):
+
+  def __init__(self):
+    self.set_apikey = None
 
   def _download_url(self, url: str) -> dict:
     #TODO: Implement web api request code in a way that supports
