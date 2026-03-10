@@ -10,7 +10,8 @@ from Profile import Profile, Post, DsuFileError, DsuProfileError
 from pathlib import Path
 import shlex
 import ds_client
-
+from OpenWeather import OpenWeather
+from LastFM import LastFM
 
 PORT = 2021
 current_profile = None
@@ -37,6 +38,20 @@ def friendly_mode():
 
     print("--- JOURNAL MENU ---")
 
+    weather_api = OpenWeather(zip="92697", ccode="US")
+    weather_api.set_apikey("YOUR_OPENWEATHER_API_KEY") 
+    
+    lastfm_api = LastFM()
+    lastfm_api.set_apikey("YOUR_LASTFM_API_KEY") 
+    
+    try:
+        print("Loading API data...")
+        weather_api.load_data()
+        lastfm_api.load_data()
+    except Exception as e:
+        print(f"Warning: Could not load API data. ({e})")
+        print("Keywords will not be transcluded.")
+
     while True:
         if current_profile:
             print(f"\nCurrent Profile: {current_profile.username}")
@@ -49,6 +64,10 @@ def friendly_mode():
             choice = input("Enter your choice: ").strip()
 
             if choice == '1':
+                print("\nNote: You can use the following keywords:")
+                print("  @weather - Adds the current weather")
+                print("  @lastfm  - Adds the current top tracks")
+                
                 content = input("Enter post content: ")
                 if not content:
                     print("Post content cannot be empty.")
@@ -57,6 +76,9 @@ def friendly_mode():
                 current_profile.add_post(Post(content))
                 save_current()
                 print("Post added locally!")
+
+                content = weather_api.transclude(content)
+                content = lastfm_api.transclude(content)
 
                 prompt = "Do you want to post this to the server? (y/n): "
                 online = input(prompt).strip().lower()
