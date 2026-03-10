@@ -73,4 +73,12 @@ class OpenWeather:
                 response.close()
         pass
         
-    
+    def transclude(self, message:str) -> str:
+        '''
+        Replaces @openweather keyword with the current temperature in the city specified by the zipcode and ccode.
+        :param message: Message to transclude
+        :returns: Transcluded message
+        '''
+        if self.temperature is not None:
+            return message.replace("@openweather", str(self.temperature))
+        return message

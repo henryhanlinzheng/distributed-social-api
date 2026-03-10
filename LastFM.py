@@ -64,5 +64,3 @@ class LastFM:
         if self.top_tracks is not None:
             return message.replace("@lastfm", self.top_tracks)
         return message
-
-# e8d84a79cf0a5a5d6f86c969587ba6a5
