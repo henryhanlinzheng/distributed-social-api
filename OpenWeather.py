@@ -30,15 +30,6 @@ class OpenWeather(WebAPI):
         self.city = None
         self.sunset=None
 
-
-    def set_apikey(self, apikey:str) -> None:
-        '''
-        Sets the apikey required to make requests to a web API.
-        :param apikey: The apikey supplied by the API service
-        '''
-        #TODO: assign apikey value to a class data attribute that can be accessed by class members
-        self._apikey = apikey
-
     def load_data(self) -> None:
         '''
         Calls the web api using the required values and stores the response in class data attributes.

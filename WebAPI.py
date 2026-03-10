@@ -17,7 +17,7 @@ from abc import ABC, abstractmethod
 class WebAPI(ABC):
 
 	def __init__(self):
-		self.set_apikey = None
+		self.apikey = None
 
 	def _download_url(self, url: str) -> dict:
 		#TODO: Implement web api request code in a way that supports
@@ -25,8 +25,9 @@ class WebAPI(ABC):
 		response = None
 		try:
 			response = urllib.request.urlopen(url)
-			data = response.read()
-			return json.loads(data)
+			json_results = response.read()
+			data = json.loads(json_results)
+			return data
 
 		except urllib.error.HTTPError as e:
 				raise Exception(f"Remote API unavailable (HTTP Error {e.code})") from e
