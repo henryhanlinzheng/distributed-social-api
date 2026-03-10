@@ -39,7 +39,7 @@ class WebAPI(ABC):
 				response.close()
 
 	def set_apikey(self, apikey:str) -> None:
-		pass
+		self.apikey = apikey
 
 	@abstractmethod
 	def load_data(self):

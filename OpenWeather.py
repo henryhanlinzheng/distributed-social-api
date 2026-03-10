@@ -12,9 +12,11 @@
 import urllib.request
 import urllib.error
 import json
+from WebAPI import WebAPI
 
-class OpenWeather:
+class OpenWeather(WebAPI):
     def __init__(self, zipcode="92612", ccode="US") -> None:
+        super().__init__()
         self.zipcode = zipcode
         self.ccode = ccode
         self._apikey = None
@@ -44,34 +46,17 @@ class OpenWeather:
         #TODO: use the apikey data attribute and the urllib module to request data from the web api. See sample code at the begining of Part 1 for a hint.
         url = f"http://api.openweathermap.org/data/2.5/weather?zip={self.zipcode},{self.ccode}&appid={self._apikey}"
         #TODO: assign the necessary response data to the required class data attributes 
-        try:
-            response = urllib.request.urlopen(url)
-            json_results = response.read()
-            data = json.loads(json_results)
+        data = self._download_url(url)
 
-            self.temperature = data['main']['temp']
-            self.high_temp = data['main']['temp_max']
-            self.low_temp = data['main']['temp_min']
-            self.longitude = data['coord']['lon']
-            self.latitude = data['coord']['lat']
-            self.description = data['weather'][0]['description']
-            self.humidity = data['main']['humidity']
-            self.city = data['name']
-            self.sunset = data['sys']['sunset']
-
-        except urllib.error.HTTPError as e:
-            print('Failed to download contents of URL')
-            print('Status code: {}'.format(e.code))
-        except urllib.error.URLError as e:
-            print('Failed to reach the server')
-            print('Reason: {}'.format(e.reason))
-        except json.JSONDecodeError as e:
-            print('Invalid data formatting in response')
-            print('Error: {}'.format(e.msg))
-        finally:
-            if response in locals() and response is not None:
-                response.close()
-        pass
+        self.temperature = data['main']['temp']
+        self.high_temp = data['main']['temp_max']
+        self.low_temp = data['main']['temp_min']
+        self.longitude = data['coord']['lon']
+        self.latitude = data['coord']['lat']
+        self.description = data['weather'][0]['description']
+        self.humidity = data['main']['humidity']
+        self.city = data['name']
+        self.sunset = data['sys']['sunset']
         
     def transclude(self, message:str) -> str:
         '''
@@ -79,6 +64,6 @@ class OpenWeather:
         :param message: Message to transclude
         :returns: Transcluded message
         '''
-        if self.temperature is not None:
-            return message.replace("@openweather", str(self.temperature))
+        if "@weather" in message and self.temperature is not None:
+            return message.replace("@weather", str(self.temperature))
         return message
