@@ -9,9 +9,6 @@
 # hhzheng1@uci.edu
 # 19204536
 
-import urllib.request
-import urllib.error
-import json
 from WebAPI import WebAPI
 
 class OpenWeather(WebAPI):
@@ -19,7 +16,6 @@ class OpenWeather(WebAPI):
         super().__init__()
         self.zipcode = zipcode
         self.ccode = ccode
-        self._apikey = None
         self.temperature = None
         self.high_temp = None
         self.low_temp = None
@@ -28,7 +24,7 @@ class OpenWeather(WebAPI):
         self.description = None
         self.humidity = None
         self.city = None
-        self.sunset=None
+        self.sunset = None
 
     def load_data(self) -> None:
         '''

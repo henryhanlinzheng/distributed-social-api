@@ -11,6 +11,7 @@
 
 from OpenWeather import OpenWeather
 from LastFM import LastFM
+from WebAPI import WebAPI
 import ui
 
 def test_api(message:str, apikey:str, webapi:WebAPI):
