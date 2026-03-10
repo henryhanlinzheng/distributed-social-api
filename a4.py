@@ -8,3 +8,10 @@
 # Henry Hanlin Zheng
 # hhzheng1@uci.edu
 # 19204536
+
+from OpenWeather import OpenWeather
+from LastFM import LastFM
+import ui
+
+if __name__ == '__main__':
+    ui.run()
