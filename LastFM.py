@@ -34,5 +34,26 @@ class LastFM:
         #TODO: use the apikey data attribute and the urllib module to request data from the web api. See sample code at the begining of Part 1 for a hint.
         url = f"http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key={self._apikey}&format=json&limit=1"
         #TODO: assign the necessary response data to the required class data attributes 
+        try:
+            response = urllib.request.urlopen(url)
+            json_results = response.read()
+            data = json.loads(json_results)
+
+            self.top_tracks = data['tracks']['track'][0]['name']
+
+        except urllib.error.HTTPError as e:
+            print('Failed to download contents of URL')
+            print('Status code: {}'.format(e.code))
+        except urllib.error.URLError as e:
+            print('Failed to reach the server')
+            print('Reason: {}'.format(e.reason))
+        except json.JSONDecodeError as e:
+            print('Invalid data formatting in response')
+            print('Error: {}'.format(e.msg))
+        finally:
+            if response in locals() and response is not None:
+                response.close()
+        pass
+
 
 # e8d84a79cf0a5a5d6f86c969587ba6a5
