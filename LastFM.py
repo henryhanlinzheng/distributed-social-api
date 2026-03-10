@@ -17,7 +17,6 @@ from WebAPI import WebAPI
 class LastFM(WebAPI):
     def __init__(self) -> None:
         super().__init__()
-        self._apikey = None
         self.top_tracks = None
 
     def load_data(self) -> None:
@@ -25,7 +24,7 @@ class LastFM(WebAPI):
         Calls the web api using the required values and stores the response in class data attributes.
         '''
         #TODO: use the apikey data attribute and the urllib module to request data from the web api. See sample code at the begining of Part 1 for a hint.
-        url = f"http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key={self._apikey}&format=json&limit=1"
+        url = f"http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key={self.apikey}&format=json&limit=1"
         #TODO: assign the necessary response data to the required class data attributes 
         response = urllib.request.urlopen(url)
         json_results = response.read()

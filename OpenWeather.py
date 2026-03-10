@@ -35,7 +35,7 @@ class OpenWeather(WebAPI):
         Calls the web api using the required values and stores the response in class data attributes.
         '''
         #TODO: use the apikey data attribute and the urllib module to request data from the web api. See sample code at the begining of Part 1 for a hint.
-        url = f"http://api.openweathermap.org/data/2.5/weather?zip={self.zipcode},{self.ccode}&appid={self._apikey}"
+        url = f"http://api.openweathermap.org/data/2.5/weather?zip={self.zipcode},{self.ccode}&appid={self.apikey}"
         #TODO: assign the necessary response data to the required class data attributes 
         data = self._download_url(url)
 
